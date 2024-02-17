@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+
+.upper-part{
+    width: 100%;
+    height:75vh;
+    display: flex;
+}
+
+.name-L{
+    width: 50%;
+    height: 100%;
+    padding-top: 2.5%;
+}
+
+
+.up-name{
+    width: 75%;
+    height: 12vh;
+    background-image: url(pictures/Stats.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+}
+
+.name-R{
+    margin-top: 25%;
+    width: 50%;
+    height: 30%;
+}
+
+#name-1, #type-1{
+    width: 50%;
+    height: 50%;
+}
+
+
+.HPbar {
+    width: 100%;
+    background-color: #da0e0e;
+  }
+
+.currentBar {
+    width: 40%;
+    height: 50px;
+    background-color: #04AA6D;
+  }
+
+.low-name{
+    float: right;
+    width: 75%;
+    height: 12vh;
+    background-image: url(pictures/Stats.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+}
+
+#name-2, #type-2{
+    width: 50%;
+    height: 50%;
+}
+
+.lower-part{
+    width: 100%;
+    height:24.5vh;
+    display: flex;
+    background-color: aquamarine;
+    border-top: 5px solid black;
+    text-align: center;
+}
+
+.Left-L-part{
+    width: 50%;
+    height: 100%;
+}
+
+.Left-R-part{
+    width: 50%;
+    height: 100%;
+    display: flex;
+}
+
+.Movement-opt{
+    width: 50%;
+    height: 100%;
+}
+
+.Spec-opt{
+    width: 50%;
+    height: 100%;
+}
