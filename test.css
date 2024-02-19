@@ -78,7 +78,7 @@
     margin-left: 5%;
 }
 
-.currentBar, .currentBar2 {
+#currentBar, #currentBar2 {
     width: 100%;
     height: 30px;
     background-color: #04AA6D;
@@ -121,7 +121,7 @@
 .inner-box_1{
     margin: 1%;
     height: 90%;
-    box-shadow:   0 0 0 6px rgb(68, 65, 65), 0 0 0 9px rgb(254, 240, 50);;
+    box-shadow:   0 0 0 6px rgb(68, 65, 65), 0 0 0 9px rgb(254, 240, 50);
 }
 
 .inner-box_2{
@@ -244,4 +244,53 @@
     background-repeat: no-repeat;
     margin-right: 20%;
     margin-bottom: 15%;
+}
+
+#StatusWindow{
+    position: absolute;
+    margin-top: 5%;
+    margin-left: 25%;
+    width: 50%;
+    height: 80%;
+    border: 5px solid black;
+    background-color: rgb(255, 245, 221);
+    /*visibility: hidden;*/
+    border-radius: 20px;
+    box-shadow: inset 0 0 0 9px rgb(136, 114, 100);
+    font-size: 30px;
+    font-weight: bold;
+    color: rgb(85, 31, 18);
+}
+
+.marginDist{
+    margin-left: 5%;
+    margin-top: 3%;
+}
+
+#StatusName{
+    margin-left: 37%;
+    margin-top: 5%;
+    font-size: larger;
+    margin-bottom: 1%;
+}
+
+.WindowButtonClose{
+    margin-left: 23%;
+    margin-top: 5%;
+    height: 20%;
+    width: 50%;
+    border: 5px solid black;
+    background-color: wheat;
+    border-radius: 60px;
+}
+
+.WindowButtonClose p{
+    text-align: center;
+    padding-top: 5%;
+    font-size: 50px;
+}
+
+.WindowButtonClose:hover{
+    background-color: rgb(235, 198, 129);
+    box-shadow: 0 0 0 3px white inset;
 }

@@ -4,10 +4,13 @@ const box1 = document.querySelector("#atk");
 const box2 = document.querySelector("#def");
 const box3 = document.querySelector("#skill");
 const box4 = document.querySelector("#special");
-const HPleftstat = document.querySelector("#HPLeft").innerHTML;
-const HPrightstat = document.querySelector("#HPRight").innerHTML;
-const HpBar = document.querySelector("#currentBar"); 
+const statusBar = document.querySelector(".up-name");
+const HPleftstat = document.querySelector("#HPLeft");
+const HPrightstat = document.querySelector("#HPRight");
+const HpBar1 = document.querySelector("#currentBar"); 
 const HpBar2 = document.querySelector("#currentBar2"); 
+const StatusWindow = document.querySelector("#StatusWindow");
+const closeButton = document.querySelector(".WindowButtonClose");
 let optiondept = 0;
 let EnemyPokemon = "Liptákkopter";
 let Ourpokemon = "Nitsubishi";
@@ -25,13 +28,17 @@ let EnemycurrentJedlikmondata;
     });
 let EnemycurrentHp = EnemycurrentJedlikmondata.health;
 
+statusBar.addEventListener('click', function() {
+    StatusWindow.style.visibility = "visible";
+});
+
 box1.addEventListener("click", function() {
     // Attack func
     if (optiondept == 0) {
         EnemycurrentHp -= currentJedlikmondata.baseatk;
-        let change = Math.round((EnemycurrentHp / EnemycurrentJedlikmondata.health) * 100)
+        let change = Math.round((EnemycurrentHp / EnemycurrentJedlikmondata.health) * 100);
         HPrightstat.innerHTML = change;
-        HpBar2.style.width = change;
+        HpBar2.style.width = change + "%";
     }
     else {
         console.log("mar skillt nyomtal meg");
@@ -85,3 +92,17 @@ function JedlikMonChange() {
         }
     });
 }
+
+function StatusWindowUpdate() {
+    document.querySelector("#StatusHP").innerHTML = currentJedlikmondata.health;
+    document.querySelector("#StatusDmg").innerHTML = currentJedlikmondata.baseatk;
+    document.querySelector("#StatusName").innerHTML = currentJedlikmondata.name;
+    document.querySelector("#StatusDef").innerHTML = currentJedlikmondata.baseDef;
+    document.querySelector("#StatusDmgboost").innerHTML = currentJedlikmondata.sk1Status;
+    document.querySelector("#StatusDmgboostPer").innerHTML = currentJedlikmondata.sk1;
+}
+
+closeButton.addEventListener('click', function() {
+    StatusWindow.style.visibility = "hidden";
+})
+StatusWindowUpdate();

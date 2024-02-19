@@ -10,6 +10,14 @@
 </head>
 
 <body>
+    <div id="StatusWindow">
+        <p id="StatusName"></p>
+        <p class="marginDist">HP: <span id="StatusHP"></span></p>
+        <p class="marginDist">Base damage: <span id="StatusDmg"></span></p>
+        <p class="marginDist">Base defense: <span id="StatusDef"></span></p>
+        <p class="marginDist">Current amount of dmg buff(s): <span id="StatusDmgboost"></span> * <span  id="StatusDmgboostPer"></span>%</p>
+        <div class="WindowButtonClose"><p>Bezárás</p></div>
+    </div>
     <div class="upper-part">
         <div class="name-L">
             <div class="leftUpPart">
@@ -18,7 +26,7 @@
                     <h2 id="type-1">Reál</h2>
                 </div>
                 <div class="HPbar">
-                    <div class="currentBar">
+                    <div id="currentBar">
                         <p id="HP1">HP <span id="HPLeft">100</span>%</p>
                     </div>
                 </div>
@@ -37,7 +45,7 @@
                     <h1 id="name-2">LiptákKopter</h1>
                 </div>
                 <div class="HPbar2">
-                    <div class="currentBar2">
+                    <div id="currentBar2">
                         <p id="HP2">HP <span id="HPRight">100</span>%</p>
                     </div>
                 </div>
