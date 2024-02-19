@@ -254,7 +254,7 @@
     height: 80%;
     border: 5px solid black;
     background-color: rgb(255, 245, 221);
-    /*visibility: hidden;*/
+    visibility: hidden;
     border-radius: 20px;
     box-shadow: inset 0 0 0 9px rgb(136, 114, 100);
     font-size: 30px;
@@ -293,4 +293,77 @@
 .WindowButtonClose:hover{
     background-color: rgb(235, 198, 129);
     box-shadow: 0 0 0 3px white inset;
+}
+
+#ChangeWindow{
+    position: absolute;
+    margin-top: 5%;
+    margin-left: 25%;
+    width: 50%;
+    height: 80%;
+    border: 5px solid black;
+    background-color: rgb(255, 245, 221);
+    visibility: visible;
+    border-radius: 20px;
+    box-shadow: inset 0 0 0 9px rgb(136, 114, 100);
+    font-size: 30px;
+    font-weight: bold;
+    color: rgb(85, 31, 18);
+}
+
+#Jmon1,#Jmon2,#Jmon3{
+    margin-left: 12.5%;
+    margin-right: 12.5%;
+    margin-top: 5%;
+    height: 15%;
+    width: 75%;
+    border: 5px solid black;
+    background-color: wheat;
+    border-radius: 30px;
+    display: flex;
+}
+
+#Jmon3:hover,#Jmon2:hover,#Jmon1:hover{
+    background-color: rgb(235, 198, 129);
+    box-shadow: 0 0 0 3px white inset;
+}
+
+#CloseButton{
+    float: right;
+    width: 10%;
+    height: 10%;
+    border: 2px solid black;
+    background-color: wheat;
+    border-radius: 5px;
+    color: rgb(0, 0, 0);
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#ChangeText{
+    margin-left: 30%;
+    margin-top: 5%;
+    font-size: larger;
+    margin-bottom: 1%; 
+}
+
+#CloseButton:hover{
+    background-color: rgb(235, 198, 129);
+    box-shadow: 0 0 0 3px white inset;
+}
+
+#JmonText1,#JmonText2,#JmonText3{
+    width: 80%;
+    height: 100%;   
+    margin-left: 5%;
+    font-size: 4vw;
+}
+
+#pic1{
+    margin-right: 5%;
+    width: 20%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
