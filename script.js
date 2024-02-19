@@ -2,6 +2,7 @@ const blockkok = document.querySelectorAll(".square");
 let TurnSide = false;
 const Turncalc = document.querySelector("#Turns");
 const Button = document.querySelector(".TurnButton");
+let matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]];
 
 Button.addEventListener("click", Turnvege);
 
@@ -19,13 +20,9 @@ function Turnvege() {
 blockkok.forEach(x => {
     x.addEventListener("mouseup", () => {
         if (TurnSide == false) {
-            if (x.classList.contains("blue")) {
-                console.log("Sajat mezod!");
-            }
-            else {
-            x.classList.remove("red");
-            x.classList.add("blue");
-            console.log(`${x.id} kek Clicckelve`);
+            if (x.classList.contains("unit")) {
+                document.querySelector("#selection").innerHTML = "selected";
+                console.log("van");
             }
         }
         else{

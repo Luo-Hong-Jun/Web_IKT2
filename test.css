@@ -69,23 +69,17 @@
 
 #HP1, #HP2{
     color: white;
-    width: min-content;
     font-weight: bold;
+    width: 100px;
+    height: 25px;
 }
 
 #HP1{
     margin-left: 5%;
 }
 
-.currentBar {
-    width: 20%;
-    height: 30px;
-    background-color: #04AA6D;
-    border-radius: 10px;
-  }
-
-  .currentBar2 {
-    width: 20%;
+.currentBar, .currentBar2 {
+    width: 100%;
     height: 30px;
     background-color: #04AA6D;
     border-radius: 10px;

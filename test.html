@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JedlikMon</title>
     <link rel="stylesheet" href="test.css">
-    <script src="test.js"></script>
+    <script src="test.js" type="module"></script>
 </head>
+
 <body>
     <div class="upper-part">
         <div class="name-L">
@@ -17,7 +19,7 @@
                 </div>
                 <div class="HPbar">
                     <div class="currentBar">
-                        <p id="HP1">HP</p>
+                        <p id="HP1">HP <span id="HPLeft">100</span>%</p>
                     </div>
                 </div>
             </div>
@@ -36,7 +38,7 @@
                 </div>
                 <div class="HPbar2">
                     <div class="currentBar2">
-                        <p id="HP2">HP</p>
+                        <p id="HP2">HP <span id="HPRight">100</span>%</p>
                     </div>
                 </div>
             </div>
@@ -70,4 +72,5 @@
         </div>
     </div>
 </body>
+
 </html>
