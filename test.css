@@ -5,6 +5,9 @@
 
   body{
     font-family: cursive;
+    background-image: url(pictures/BG.png);
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 
 .upper-part{
@@ -12,6 +15,7 @@
     height:75vh;
     display: flex;
     text-align: center;
+    overflow: hidden;
 }
 
 .upper-part h1,.upper-part h2{
@@ -35,9 +39,9 @@
 }
 
 .name-R{
-    margin-top: 25%;
+    padding-top: 2.5%;
     width: 50%;
-    height: 30%;
+    height: 40%;
 }
 
 #name-1, #type-1{
@@ -49,6 +53,18 @@
 .HPbar {
     width: 88%;
     background-color: #da0e0e;
+    border-radius: 15px;
+    border-right: 4px solid black;
+    border-bottom: 4px solid black;
+  }
+
+  .HPbar2 {
+    float: right;
+    width: 88%; 
+    border-radius: 15px;
+    background-color: #da0e0e;
+    border-left: 4px solid black;
+    border-bottom: 4px solid black;
   }
 
 #HP1, #HP2{
@@ -65,12 +81,20 @@
     width: 20%;
     height: 30px;
     background-color: #04AA6D;
+    border-radius: 10px;
+  }
+
+  .currentBar2 {
+    width: 20%;
+    height: 30px;
+    background-color: #04AA6D;
+    border-radius: 10px;
   }
 
 .low-name{
-    width: 75%;
+    width: 100%;
     height: 12vh;
-    background-image: url(pictures/Stats_1.png);
+    background-image: url(pictures/Stats_2.png);
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
@@ -196,4 +220,34 @@
     border-radius: 30px;
     background-color: #e747b7;
     box-shadow: 0 0 0 3px white inset;
+}
+
+.leftUpPart{
+    height: 50%;
+    width: 100%;
+}
+
+.leftUpPartR{
+    height: 100%;
+    width: 100%;
+}
+
+.jedlikmon1{
+    height: 50%;
+    width: 50%;
+    background-image: url(/pictures/laci1.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 20%;
+}
+
+.jedlikmon2{
+    float: right;
+    height: 100%;
+    width: 50%;
+    background-image: url(/pictures/LiptakKoter.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 20%;
+    margin-bottom: 15%;
 }
