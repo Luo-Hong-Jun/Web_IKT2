@@ -21,29 +21,60 @@ const text3 = document.querySelector("#JmonText3");
 const pic1 = document.querySelector("#pic1");
 const pic2 = document.querySelector("#pic2");
 const pic3 = document.querySelector("#pic3");
+const Jmon1 = document.querySelector("#Jmon1");
+const Jmon2 = document.querySelector("#Jmon2");
+const Jmon3 = document.querySelector("#Jmon3");
+const JedlikmonImage1 = document.querySelector(".jedlikmon1");
+const JedlikmonImage2 = document.querySelector(".jedlikmon2");
+const EnemyPokemon1 = "Liptákkopter";
 let optiondept = 0;
-let EnemyPokemon = "Liptákkopter";
-let Ourpokemon = "Nitsubishi";
-let currentJedlikmondata;
+const Ourpokemon1 = "Nitsubishi";
+const Ourpokemon2 = "Liptákkopter";
+const Ourpokemon3 = "Nitsubishi";
+let OurJedlikmon1;
+let OurJedlikmon2;
+let OurJedlikmon3;
     JedlikmonList.forEach(x => {
-        if (x.name == Ourpokemon) {
-            currentJedlikmondata = x;
+        if (x.name == Ourpokemon1) {
+            OurJedlikmon1 = x;
         }
     });
-let EnemycurrentJedlikmondata;
     JedlikmonList.forEach(x => {
-        if (x.name == EnemyPokemon) {
-            EnemycurrentJedlikmondata = x;
+        if (x.name == Ourpokemon2) {
+            OurJedlikmon2 = x;
         }
     });
-let EnemycurrentHp = EnemycurrentJedlikmondata.health;
+    JedlikmonList.forEach(x => {
+        if (x.name == Ourpokemon3) {
+            OurJedlikmon3 = x;
+        }
+    });
+let EnemyJedlikmon1;
+let EnemyJedlikmon2;
+let EnemyJedlikmon3;
+    JedlikmonList.forEach(x => {
+        if (x.name == EnemyPokemon1) {
+            EnemyJedlikmon1 = x;
+        }
+    });
+    //2 extraJedlikmon
+
+
+let EnemycurrentHp = EnemyJedlikmon1.health;
+let OurCurrentHp = OurJedlikmon1.health;
+let EnemycurrentJedlikmondata = EnemyJedlikmon1;
 
 function Listing() {
-    text1.innerHTML = currentJedlikmondata.name;
-    pic1.src = currentJedlikmondata.SmolPicture;  
+    text1.innerHTML = OurJedlikmon1.name;
+    pic1.src = OurJedlikmon1.SmolPicture;  
+    text2.innerHTML = OurJedlikmon2.name;
+    pic2.src = OurJedlikmon2.SmolPicture;  
+    text3.innerHTML = OurJedlikmon3.name;
+    pic3.src = OurJedlikmon3.SmolPicture;  
     // unifinished
 }
 
+let currentJedlikmondata = OurJedlikmon1;
 // Actual javascript starts here
 statusBar.addEventListener('click', function() {
     StatusWindow.style.visibility = "visible";
@@ -171,14 +202,6 @@ function ResetOptions() {
         optiondept--;
 }
 
-function JedlikMonChange() {
-    JedlikmonList.forEach(x => {
-        if (x.name == Ourpokemon) {
-            currentJedlikmondata = x;
-        }
-    });
-}
-
 function StatusWindowUpdate() {
     document.querySelector("#StatusHP").innerHTML = currentJedlikmondata.health;
     document.querySelector("#StatusDmg").innerHTML = currentJedlikmondata.baseatk;
@@ -188,12 +211,43 @@ function StatusWindowUpdate() {
     document.querySelector("#StatusDmgboostPer").innerHTML = currentJedlikmondata.sk1;
 }
 
+function ResetJedlikmonImage() {
+    JedlikmonImage1.style.backgroundImage = `url(${currentJedlikmondata.picture})`;
+}
+
 closeButton.addEventListener('click', function() {
     StatusWindow.style.visibility = "hidden";
 });
 
 ChangeJedlikMonWindow.addEventListener('click', function() {
     ChangeWindow.style.visibility = "hidden";
+});
+
+Jmon1.addEventListener('click', function() {
+    currentJedlikmondata = OurJedlikmon1;
+    ChangeWindow.style.visibility = "hidden";
+    document.querySelector("#name-1").innerHTML = currentJedlikmondata.name;
+    document.querySelector("#type-1").innerHTML = currentJedlikmondata.type;
+    StatusWindowUpdate();
+    ResetJedlikmonImage();
+});
+
+Jmon2.addEventListener('click', function() {
+    currentJedlikmondata = OurJedlikmon2;
+    ChangeWindow.style.visibility = "hidden";
+    document.querySelector("#name-1").innerHTML = currentJedlikmondata.name;
+    document.querySelector("#type-1").innerHTML = currentJedlikmondata.type;
+    StatusWindowUpdate();
+    ResetJedlikmonImage();
+});
+
+Jmon3.addEventListener('click', function() {
+    currentJedlikmondata = OurJedlikmon3;
+    ChangeWindow.style.visibility = "hidden";
+    document.querySelector("#name-1").innerHTML = currentJedlikmondata.name;
+    document.querySelector("#type-1").innerHTML = currentJedlikmondata.type;
+    StatusWindowUpdate();
+    ResetJedlikmonImage();
 });
 
 StatusWindowUpdate();
