@@ -27,7 +27,6 @@ const Jmon2 = document.querySelector("#Jmon2");
 const Jmon3 = document.querySelector("#Jmon3");
 const JedlikmonImage1 = document.querySelector(".jedlikmon1");
 const JedlikmonImage2 = document.querySelector(".jedlikmon2");
-const EnemyPokemon1 = "Liptákkopter";
 let optiondept = 0;
 const Ourpokemon1 = "Nitsubishi";
 const Ourpokemon2 = "Liptákkopter";
@@ -35,6 +34,7 @@ const Ourpokemon3 = "Nitsubishi";
 const EnJedlikmon1 = "Liptákkopter";
 const EnJedlikmon2 = "Nitsubishi";
 const EnJedlikmon3 = "Liptákkopter";
+let LivingList = [`Nitsubishi`,`Liptákkopter`,`Nitsubishi`];
 let OurJedlikmon1;
 let OurJedlikmon2;
 let OurJedlikmon3;
@@ -105,6 +105,7 @@ box1.addEventListener("click", function() {
                 EnemycurrentHp = 0;
                 HPrightstat.innerHTML = 0;
                 HpBar2.style.width = 0 + "%";
+                EnemyDies();
             }
             else{
                 HPrightstat.innerHTML = change;
@@ -167,10 +168,12 @@ box3.addEventListener("click", function() {
             EnemycurrentHp = 0;
             HPrightstat.innerHTML = 0;
             HpBar2.style.width = 0 + "%";
+            EnemyDies();
         }
         else{
             HPrightstat.innerHTML = change;
             HpBar2.style.width = change + "%";
+            BotMove(OurCurrentHp);
         }
     }
 });
@@ -224,8 +227,7 @@ Jmon1.addEventListener('click', function() {
     currentJedlikmondata = OurJedlikmon1;
     OurCurrentHp = HP1;
     ChangeWindow.style.visibility = "hidden";
-    document.querySelector("#name-1").innerHTML = currentJedlikmondata.name;
-    document.querySelector("#type-1").innerHTML = currentJedlikmondata.type;
+    NameTypeReset();
     ResetJedlikmonImage();
     ChangeHP(OurJedlikmon1);
     StatusWindowUpdate(HP1);
@@ -235,8 +237,7 @@ Jmon2.addEventListener('click', function() {
     currentJedlikmondata = OurJedlikmon2;
     OurCurrentHp = HP2;
     ChangeWindow.style.visibility = "hidden";
-    document.querySelector("#name-1").innerHTML = currentJedlikmondata.name;
-    document.querySelector("#type-1").innerHTML = currentJedlikmondata.type;
+    NameTypeReset();
     ResetJedlikmonImage();
     ChangeHP(OurJedlikmon2);
     StatusWindowUpdate(HP2);
@@ -246,13 +247,21 @@ Jmon3.addEventListener('click', function() {
     currentJedlikmondata = OurJedlikmon3;
     OurCurrentHp = HP3;
     ChangeWindow.style.visibility = "hidden";
-    document.querySelector("#name-1").innerHTML = currentJedlikmondata.name;
-    document.querySelector("#type-1").innerHTML = currentJedlikmondata.type;
+    NameTypeReset();
     ResetJedlikmonImage();
     ChangeHP(OurJedlikmon3);
     StatusWindowUpdate(HP3);
 });
 
+function NameTypeReset(){
+    document.querySelector("#name-1").innerHTML = currentJedlikmondata.name;
+    document.querySelector("#type-1").innerHTML = currentJedlikmondata.type;
+}
+
+function EnemyNameTypeReset(){
+    document.querySelector("#name-2").innerHTML = EnemycurrentJedlikmondata.name;
+    document.querySelector("#type-2").innerHTML = EnemycurrentJedlikmondata.type;
+}
 
 function ResetOptions() {
         box1.innerHTML = "<p>Attack<p>";
@@ -275,6 +284,10 @@ function ResetJedlikmonImage() {
     JedlikmonImage1.style.backgroundImage = `url(${currentJedlikmondata.picture})`;
 }
 
+function ResetEnemyJedlikmonImage() {
+    JedlikmonImage2.style.backgroundImage = `url(${EnemycurrentJedlikmondata.picture})`;
+}
+
 function ChangeHP(Jedlikmon) {
     if (currentJedlikmondata.name == OurJedlikmon1.name) {
         OurCurrentHp = HP1;
@@ -288,6 +301,81 @@ function ChangeHP(Jedlikmon) {
     let change = Math.round((OurCurrentHp / Jedlikmon.health) * 100);
         HPleftstat.innerHTML = change;
         HpBar1.style.width = change + "%";
+}
+
+function ChangeEnemy(Jedlikmon) {
+    let change = Math.round((EnemycurrentHp / Jedlikmon.health) * 100);
+        HPrightstat.innerHTML = change;
+        HpBar2.style.width = change + "%";
+}
+
+function EnemyDies() {
+    if (EnemycurrentJedlikmondata.name == EnemyJedlikmon1.name) {
+        EnemycurrentJedlikmondata = EnemyJedlikmon2;
+        EnemycurrentHp = EnemyJedlikmon2.health;
+        ChangeEnemy(EnemyJedlikmon2);
+        ResetEnemyJedlikmonImage();
+        EnemyNameTypeReset();
+    }
+    else if(EnemycurrentJedlikmondata.name == EnemyJedlikmon2.name){
+        console.log("Megtörtént");
+        EnemycurrentJedlikmondata = EnemyJedlikmon3;
+        EnemycurrentHp = EnemyJedlikmon3.health;
+        ChangeEnemy(EnemyJedlikmon3);
+        ResetEnemyJedlikmonImage();
+        EnemyNameTypeReset();
+    }
+    else{
+        console.log("you won bitch");
+    }
+}
+
+function MyJedlikmonDies(JedlikmonOnField) {
+    for (let i = 0; i < LivingList.length; i++) {
+        if (LivingList[i] == JedlikmonOnField.name) {
+            if (i - 1 > -1) {
+                let namecheck = LivingList[i-1];
+                Find(namecheck);
+                LivingList.splice(i, 1);
+            }
+            else if (i + 1 < LivingList.length) {
+                let namecheck = LivingList[i+1];
+                Find(namecheck);
+                LivingList.splice(i, 1);
+            }
+            else{
+                let namecheck = LivingList[i];
+                Find(namecheck);
+            }
+        }
+    }
+}
+
+function Find(name) {
+    if (name == OurJedlikmon1.name) {
+        currentJedlikmondata = OurJedlikmon1;
+        OurCurrentHp = OurJedlikmon1.health;
+        ChangeHP(OurJedlikmon1);
+        ResetJedlikmonImage();
+        StatusWindowUpdate(OurCurrentHp);
+        NameTypeReset();
+    }
+    else if(name == OurJedlikmon2.name){
+        currentJedlikmondata = OurJedlikmon2;
+        OurCurrentHp = OurJedlikmon2.health;
+        ChangeHP(OurJedlikmon2);
+        ResetJedlikmonImage();
+        StatusWindowUpdate(OurCurrentHp);
+        NameTypeReset();
+    }
+    else{
+        currentJedlikmondata = OurJedlikmon3;
+        OurCurrentHp = OurJedlikmon3.health;
+        ChangeHP(OurJedlikmon3);
+        ResetJedlikmonImage();
+        StatusWindowUpdate(OurCurrentHp);
+        NameTypeReset();
+    }
 }
 
 // Bot rész
@@ -307,10 +395,18 @@ function BotMove(HP) {
     console.log(HP1);
     console.log(HP2);
     console.log(HP3);
-    let change = Math.round((HP / currentJedlikmondata.health) * 100);
-    HPleftstat.innerHTML = change;
-    HpBar1.style.width = change + "%";
     StatusWindowUpdate(HP);
+    let change = Math.round((HP / currentJedlikmondata.health) * 100);
+    if (OurCurrentHp <= 0) {
+        OurCurrentHp = 0;
+        HPleftstat.innerHTML = 0;
+        HpBar1.style.width = 0 + "%";
+        MyJedlikmonDies(currentJedlikmondata);
+    }
+    else{
+        HPleftstat.innerHTML = change;
+        HpBar1.style.width = change + "%";
+    }
 }
 
 StatusWindowUpdate();
