@@ -1,5 +1,6 @@
 import Jedlikmons from "./Unitdata.js";
 let JedlikmonList = Jedlikmons;
+let Turn = false;
 const box1 = document.querySelector("#atk");
 const box2 = document.querySelector("#def");
 const box3 = document.querySelector("#skill");
@@ -31,6 +32,9 @@ let optiondept = 0;
 const Ourpokemon1 = "Nitsubishi";
 const Ourpokemon2 = "Liptákkopter";
 const Ourpokemon3 = "Nitsubishi";
+const EnJedlikmon1 = "Liptákkopter";
+const EnJedlikmon2 = "Nitsubishi";
+const EnJedlikmon3 = "Liptákkopter";
 let OurJedlikmon1;
 let OurJedlikmon2;
 let OurJedlikmon3;
@@ -53,16 +57,26 @@ let EnemyJedlikmon1;
 let EnemyJedlikmon2;
 let EnemyJedlikmon3;
     JedlikmonList.forEach(x => {
-        if (x.name == EnemyPokemon1) {
+        if (x.name == EnJedlikmon1) {
             EnemyJedlikmon1 = x;
         }
     });
-    //2 extraJedlikmon
-
-
-let EnemycurrentHp = EnemyJedlikmon1.health;
-let OurCurrentHp = OurJedlikmon1.health;
-let EnemycurrentJedlikmondata = EnemyJedlikmon1;
+    JedlikmonList.forEach(x => {
+        if (x.name == EnJedlikmon2) {
+            EnemyJedlikmon2 = x;
+        }
+    });
+    JedlikmonList.forEach(x => {
+        if (x.name == EnJedlikmon3) {
+            EnemyJedlikmon3 = x;
+        }
+    });
+let HP1 =  OurJedlikmon1.health;
+let HP2 =  OurJedlikmon2.health;
+let HP3 =  OurJedlikmon3.health;
+let EnemyHP1 =  EnemyJedlikmon1.health;
+let EnemyHP2 =  EnemyJedlikmon2.health;
+let EnemyHP3 =  EnemyJedlikmon3.health;
 
 function Listing() {
     text1.innerHTML = OurJedlikmon1.name;
@@ -71,10 +85,12 @@ function Listing() {
     pic2.src = OurJedlikmon2.SmolPicture;  
     text3.innerHTML = OurJedlikmon3.name;
     pic3.src = OurJedlikmon3.SmolPicture;  
-    // unifinished
 }
 
+let EnemycurrentHp = EnemyJedlikmon1.health;
+let EnemycurrentJedlikmondata = EnemyJedlikmon1;
 let currentJedlikmondata = OurJedlikmon1;
+let OurCurrentHp = OurJedlikmon1.health;
 // Actual javascript starts here
 statusBar.addEventListener('click', function() {
     StatusWindow.style.visibility = "visible";
@@ -82,22 +98,23 @@ statusBar.addEventListener('click', function() {
 
 box1.addEventListener("click", function() {
     // Attack func
-    if (optiondept == 0) {
-        EnemycurrentHp -= currentJedlikmondata.baseatk;
-        let change = Math.round((EnemycurrentHp / EnemycurrentJedlikmondata.health) * 100);
-        if (EnemycurrentHp <= 0) {
-            EnemycurrentHp = 0;
-            HPrightstat.innerHTML = 0;
-            HpBar2.style.width = 0 + "%";
+        if (optiondept == 0) {
+            EnemycurrentHp -= currentJedlikmondata.baseatk;
+            let change = Math.round((EnemycurrentHp / EnemycurrentJedlikmondata.health) * 100);
+            if (EnemycurrentHp <= 0) {
+                EnemycurrentHp = 0;
+                HPrightstat.innerHTML = 0;
+                HpBar2.style.width = 0 + "%";
+            }
+            else{
+                HPrightstat.innerHTML = change;
+                HpBar2.style.width = change + "%";
+            }
         }
-        else{
-            HPrightstat.innerHTML = change;
-            HpBar2.style.width = change + "%";
+        else {
+            console.log("mar skillt nyomtal meg");
         }
-    }
-    else {
-        console.log("mar skillt nyomtal meg");
-    }
+        BotMove(OurCurrentHp);
 });
 
 box1.addEventListener('mouseover', function(){
@@ -194,26 +211,6 @@ box4.addEventListener('mouseout', function(){
     TextBox.innerHTML = "Mit választasz?";
 });
 
-function ResetOptions() {
-        box1.innerHTML = "<p>Attack<p>";
-        box2.innerHTML = "<p>Defense<p>";
-        box3.innerHTML = "<p>Skill<p>";
-        box4.innerHTML = "<p>Change Jedlikmon<p>";
-        optiondept--;
-}
-
-function StatusWindowUpdate() {
-    document.querySelector("#StatusHP").innerHTML = currentJedlikmondata.health;
-    document.querySelector("#StatusDmg").innerHTML = currentJedlikmondata.baseatk;
-    document.querySelector("#StatusName").innerHTML = currentJedlikmondata.name;
-    document.querySelector("#StatusDef").innerHTML = currentJedlikmondata.baseDef;
-    document.querySelector("#StatusDmgboost").innerHTML = currentJedlikmondata.sk1Status;
-    document.querySelector("#StatusDmgboostPer").innerHTML = currentJedlikmondata.sk1;
-}
-
-function ResetJedlikmonImage() {
-    JedlikmonImage1.style.backgroundImage = `url(${currentJedlikmondata.picture})`;
-}
 
 closeButton.addEventListener('click', function() {
     StatusWindow.style.visibility = "hidden";
@@ -225,32 +222,96 @@ ChangeJedlikMonWindow.addEventListener('click', function() {
 
 Jmon1.addEventListener('click', function() {
     currentJedlikmondata = OurJedlikmon1;
+    OurCurrentHp = HP1;
     ChangeWindow.style.visibility = "hidden";
     document.querySelector("#name-1").innerHTML = currentJedlikmondata.name;
     document.querySelector("#type-1").innerHTML = currentJedlikmondata.type;
-    StatusWindowUpdate();
     ResetJedlikmonImage();
+    ChangeHP(OurJedlikmon1);
+    StatusWindowUpdate(HP1);
 });
 
 Jmon2.addEventListener('click', function() {
     currentJedlikmondata = OurJedlikmon2;
+    OurCurrentHp = HP2;
     ChangeWindow.style.visibility = "hidden";
     document.querySelector("#name-1").innerHTML = currentJedlikmondata.name;
     document.querySelector("#type-1").innerHTML = currentJedlikmondata.type;
-    StatusWindowUpdate();
     ResetJedlikmonImage();
+    ChangeHP(OurJedlikmon2);
+    StatusWindowUpdate(HP2);
 });
 
 Jmon3.addEventListener('click', function() {
     currentJedlikmondata = OurJedlikmon3;
+    OurCurrentHp = HP3;
     ChangeWindow.style.visibility = "hidden";
     document.querySelector("#name-1").innerHTML = currentJedlikmondata.name;
     document.querySelector("#type-1").innerHTML = currentJedlikmondata.type;
-    StatusWindowUpdate();
     ResetJedlikmonImage();
+    ChangeHP(OurJedlikmon3);
+    StatusWindowUpdate(HP3);
 });
+
+
+function ResetOptions() {
+        box1.innerHTML = "<p>Attack<p>";
+        box2.innerHTML = "<p>Defense<p>";
+        box3.innerHTML = "<p>Skill<p>";
+        box4.innerHTML = "<p>Change Jedlikmon<p>";
+        optiondept--;
+}
+
+function StatusWindowUpdate(HP) {
+    document.querySelector("#StatusHP").innerHTML = HP;
+    document.querySelector("#StatusDmg").innerHTML = currentJedlikmondata.baseatk;
+    document.querySelector("#StatusName").innerHTML = currentJedlikmondata.name;
+    document.querySelector("#StatusDef").innerHTML = currentJedlikmondata.baseDef;
+    document.querySelector("#StatusDmgboost").innerHTML = currentJedlikmondata.sk1Status;
+    document.querySelector("#StatusDmgboostPer").innerHTML = currentJedlikmondata.sk1;
+}
+
+function ResetJedlikmonImage() {
+    JedlikmonImage1.style.backgroundImage = `url(${currentJedlikmondata.picture})`;
+}
+
+function ChangeHP(Jedlikmon) {
+    if (currentJedlikmondata.name == OurJedlikmon1.name) {
+        OurCurrentHp = HP1;
+    }
+    else if(currentJedlikmondata.name == OurJedlikmon2.name){
+        OurCurrentHp = HP2;
+    }
+    //else{
+    //  OurCurrentHp = HP3;
+    //}
+    let change = Math.round((OurCurrentHp / Jedlikmon.health) * 100);
+        HPleftstat.innerHTML = change;
+        HpBar1.style.width = change + "%";
+}
+
+// Bot rész
+function BotMove(HP) {
+    OurCurrentHp -= EnemycurrentJedlikmondata.baseatk;
+    if (currentJedlikmondata.name == OurJedlikmon1.name) {
+        HP1 = HP;
+    }
+    else if(currentJedlikmondata.name == OurJedlikmon2.name){
+        HP2 = HP;
+    }
+        //else{
+    //  HP3 = OurCurrentHp;
+    //}
+    console.log(HP1);
+    console.log(HP2);
+    console.log(HP3);
+    let change = Math.round((HP / currentJedlikmondata.health) * 100);
+    HPleftstat.innerHTML = change;
+    HpBar1.style.width = change + "%";
+    StatusWindowUpdate(HP);
+}
 
 StatusWindowUpdate();
 Listing();
 
-Audio.innerHTML = '<audio src="/music1.mp3" controls="controls" style="display: none;" autoplay></audio>';
+// Audio.innerHTML = '<audio src="/music1.mp3" controls="controls" style="display: none;" autoplay></audio>';

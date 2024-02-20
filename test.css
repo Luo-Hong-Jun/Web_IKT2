@@ -303,7 +303,7 @@
     height: 80%;
     border: 5px solid black;
     background-color: rgb(255, 245, 221);
-    visibility: visible;
+    visibility: hidden;
     border-radius: 20px;
     box-shadow: inset 0 0 0 9px rgb(136, 114, 100);
     font-size: 30px;
