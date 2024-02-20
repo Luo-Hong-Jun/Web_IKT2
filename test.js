@@ -292,7 +292,9 @@ function ChangeHP(Jedlikmon) {
 
 // Bot rész
 function BotMove(HP) {
+    
     OurCurrentHp -= EnemycurrentJedlikmondata.baseatk;
+    HP = OurCurrentHp;
     if (currentJedlikmondata.name == OurJedlikmon1.name) {
         HP1 = HP;
     }
@@ -314,4 +316,4 @@ function BotMove(HP) {
 StatusWindowUpdate();
 Listing();
 
-// Audio.innerHTML = '<audio src="/music1.mp3" controls="controls" style="display: none;" autoplay></audio>';
+Audio.innerHTML = '<audio src="/music1.mp3" controls="controls" style="display: none;" autoplay></audio>';
