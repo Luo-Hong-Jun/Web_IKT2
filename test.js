@@ -27,14 +27,19 @@ const Jmon2 = document.querySelector("#Jmon2");
 const Jmon3 = document.querySelector("#Jmon3");
 const JedlikmonImage1 = document.querySelector(".jedlikmon1");
 const JedlikmonImage2 = document.querySelector(".jedlikmon2");
+let DefActivation = false;
 let optiondept = 0;
+let DMGEffect1 = 0;
+let DMGEffect2 = 0;
+let DMGEffect3 = 0;
+let DMGENEffect = 0;
 const Ourpokemon1 = "Nitsubishi";
 const Ourpokemon2 = "Liptákkopter";
-const Ourpokemon3 = "Nitsubishi";
+const Ourpokemon3 = "Somesz";
 const EnJedlikmon1 = "Liptákkopter";
 const EnJedlikmon2 = "Nitsubishi";
-const EnJedlikmon3 = "Liptákkopter";
-let LivingList = [`Nitsubishi`,`Liptákkopter`,`Nitsubishi`];
+const EnJedlikmon3 = "Somesz";
+let LivingList = [`Nitsubishi`,`Liptákkopter`,`Somesz`];
 let OurJedlikmon1;
 let OurJedlikmon2;
 let OurJedlikmon3;
@@ -99,13 +104,25 @@ statusBar.addEventListener('click', function() {
 box1.addEventListener("click", function() {
     // Attack func
         if (optiondept == 0) {
-            EnemycurrentHp -= currentJedlikmondata.baseatk;
+            if (Buffcheck(currentJedlikmondata.name) > 0) {
+                if (Number(currentJedlikmondata.baseatk)+Number(currentJedlikmondata.baseatk*currentJedlikmondata.sk1) - EnemycurrentJedlikmondata.baseDef > 0){
+                    EnemycurrentHp -= Number(currentJedlikmondata.baseatk)+Number(currentJedlikmondata.baseatk*currentJedlikmondata.sk1) - EnemycurrentJedlikmondata.baseDef;
+                }
+            }
+            else if (currentJedlikmondata.baseatk - EnemycurrentJedlikmondata.baseDef > 0) {
+                EnemycurrentHp -= (currentJedlikmondata.baseatk - EnemycurrentJedlikmondata.baseDef);
+            }
             let change = Math.round((EnemycurrentHp / EnemycurrentJedlikmondata.health) * 100);
             if (EnemycurrentHp <= 0) {
                 EnemycurrentHp = 0;
                 HPrightstat.innerHTML = 0;
                 HpBar2.style.width = 0 + "%";
-                EnemyDies();
+                if (EnemycurrentJedlikmondata.name != EnemyJedlikmon3.name) {
+                    EnemyDies();
+                }
+                else{
+                    alert("NYertél yey");
+                }
             }
             else{
                 HPrightstat.innerHTML = change;
@@ -113,7 +130,9 @@ box1.addEventListener("click", function() {
             }
         }
         else {
-            console.log("mar skillt nyomtal meg");
+            ApplyBuff(currentJedlikmondata.name);
+            ResetOptions();
+            console.log("Haaappened");
         }
         BotMove(OurCurrentHp);
 });
@@ -134,9 +153,12 @@ box1.addEventListener('mouseout', function(){
 box2.addEventListener("click", function() {
     // Def func
     if (optiondept == 0) {
+        DefActivation = true;
+        BotMove(OurCurrentHp);
     }
     else {
         console.log("mar skillt nyomtal meg");
+        ResetOptions();
     }
 });
 
@@ -162,19 +184,32 @@ box3.addEventListener("click", function() {
         optiondept++;
     }
     else {
-        EnemycurrentHp -= currentJedlikmondata.baseatk * currentJedlikmondata.sk3;
+        if (Buffcheck(currentJedlikmondata.name) > 0) {
+            if (Number(currentJedlikmondata.baseatk * currentJedlikmondata.sk3)+Number((currentJedlikmondata.baseatk * currentJedlikmondata.sk3)*currentJedlikmondata.sk1) - EnemycurrentJedlikmondata.baseDef > 0){
+                EnemycurrentHp -= Number(currentJedlikmondata.baseatk * currentJedlikmondata.sk3)+Number((currentJedlikmondata.baseatk * currentJedlikmondata.sk3)*currentJedlikmondata.sk1) - EnemycurrentJedlikmondata.baseDef;
+            }
+        }
+        else if (currentJedlikmondata.baseatk * currentJedlikmondata.sk3 - EnemycurrentJedlikmondata.baseDef > 0) {
+            EnemycurrentHp -= (currentJedlikmondata.baseatk * currentJedlikmondata.sk3) - EnemycurrentJedlikmondata.baseDef;
+        }
         let change = Math.round((EnemycurrentHp / EnemycurrentJedlikmondata.health) * 100);
         if (EnemycurrentHp <= 0) {
             EnemycurrentHp = 0;
             HPrightstat.innerHTML = 0;
             HpBar2.style.width = 0 + "%";
-            EnemyDies();
+            if (EnemycurrentJedlikmondata.name != EnemyJedlikmon3.name) {
+                EnemyDies();
+            }
+            else{
+                alert("NYertél yey");
+            }
         }
         else{
             HPrightstat.innerHTML = change;
             HpBar2.style.width = change + "%";
             BotMove(OurCurrentHp);
         }
+        ResetOptions();
     }
 });
 
@@ -223,7 +258,7 @@ ChangeJedlikMonWindow.addEventListener('click', function() {
     ChangeWindow.style.visibility = "hidden";
 });
 
-Jmon1.addEventListener('click', function() {
+function Jmon1Event() {
     currentJedlikmondata = OurJedlikmon1;
     OurCurrentHp = HP1;
     ChangeWindow.style.visibility = "hidden";
@@ -231,9 +266,9 @@ Jmon1.addEventListener('click', function() {
     ResetJedlikmonImage();
     ChangeHP(OurJedlikmon1);
     StatusWindowUpdate(HP1);
-});
+}
 
-Jmon2.addEventListener('click', function() {
+function Jmon2Event() {
     currentJedlikmondata = OurJedlikmon2;
     OurCurrentHp = HP2;
     ChangeWindow.style.visibility = "hidden";
@@ -241,9 +276,9 @@ Jmon2.addEventListener('click', function() {
     ResetJedlikmonImage();
     ChangeHP(OurJedlikmon2);
     StatusWindowUpdate(HP2);
-});
+}
 
-Jmon3.addEventListener('click', function() {
+function Jmon3Event() {
     currentJedlikmondata = OurJedlikmon3;
     OurCurrentHp = HP3;
     ChangeWindow.style.visibility = "hidden";
@@ -251,7 +286,13 @@ Jmon3.addEventListener('click', function() {
     ResetJedlikmonImage();
     ChangeHP(OurJedlikmon3);
     StatusWindowUpdate(HP3);
-});
+}
+
+Jmon1.addEventListener('click', Jmon1Event);
+
+Jmon2.addEventListener('click', Jmon2Event);
+
+Jmon3.addEventListener('click', Jmon3Event);
 
 function NameTypeReset(){
     document.querySelector("#name-1").innerHTML = currentJedlikmondata.name;
@@ -276,7 +317,9 @@ function StatusWindowUpdate(HP) {
     document.querySelector("#StatusDmg").innerHTML = currentJedlikmondata.baseatk;
     document.querySelector("#StatusName").innerHTML = currentJedlikmondata.name;
     document.querySelector("#StatusDef").innerHTML = currentJedlikmondata.baseDef;
+    //  TUrn system köll itt javíani
     document.querySelector("#StatusDmgboost").innerHTML = currentJedlikmondata.sk1Status;
+    //
     document.querySelector("#StatusDmgboostPer").innerHTML = currentJedlikmondata.sk1;
 }
 
@@ -295,9 +338,9 @@ function ChangeHP(Jedlikmon) {
     else if(currentJedlikmondata.name == OurJedlikmon2.name){
         OurCurrentHp = HP2;
     }
-    //else{
-    //  OurCurrentHp = HP3;
-    //}
+    else{
+      OurCurrentHp = HP3;
+    }
     let change = Math.round((OurCurrentHp / Jedlikmon.health) * 100);
         HPleftstat.innerHTML = change;
         HpBar1.style.width = change + "%";
@@ -337,17 +380,38 @@ function MyJedlikmonDies(JedlikmonOnField) {
                 let namecheck = LivingList[i-1];
                 Find(namecheck);
                 LivingList.splice(i, 1);
+                FindWillDieJedlikMon(JedlikmonOnField.name);
             }
             else if (i + 1 < LivingList.length) {
                 let namecheck = LivingList[i+1];
                 Find(namecheck);
                 LivingList.splice(i, 1);
+                FindWillDieJedlikMon(JedlikmonOnField.name);
             }
             else{
                 let namecheck = LivingList[i];
                 Find(namecheck);
+                FindWillDieJedlikMon(JedlikmonOnField.name);
             }
         }
+    }
+}
+
+function FindWillDieJedlikMon(name) {
+    if (name == OurJedlikmon1.name) {
+        Jmon1.removeEventListener('click', Jmon1Event);
+        Jmon1.style.backgroundColor = "rgb(86, 85, 84)";
+        text1.style.color = "white";
+    }
+    else if(name == OurJedlikmon2.name){
+        Jmon2.removeEventListener('click', Jmon2Event);
+        Jmon2.style.backgroundColor = "rgb(86, 85, 84)";
+        text2.style.color = "white";
+    }
+    else{
+        Jmon3.removeEventListener('click', Jmon3Event);
+        Jmon3.style.backgroundColor = "rgb(86, 85, 84)";
+        text3.style.color = "white";
     }
 }
 
@@ -378,10 +442,62 @@ function Find(name) {
     }
 }
 
+function ApplyBuff(name) {
+    if (name == OurJedlikmon1.name) {
+        DMGEffect1 += 3;
+    }
+    else if(name == OurJedlikmon2.name){
+        DMGEffect2 += 3;
+    }
+    else{
+        DMGEffect3 += 3;
+    }
+}
+
+function Buffcheck(name) {
+    if (name == OurJedlikmon1.name) {
+        return DMGEffect1;
+    }
+    else if(name == OurJedlikmon2.name){
+        return DMGEffect2;
+    }
+    else{
+        return DMGEffect3;
+    }
+}
+
+function BuffDecay() {
+    if (DMGEffect1 > 0) {
+        DMGEffect1--;
+    }
+    if(DMGEffect2 > 0){
+        DMGEffect2--;
+    }
+    if(DMGEffect3 > 0){
+        DMGEffect3--;
+    }
+}
+
 // Bot rész
 function BotMove(HP) {
-    
-    OurCurrentHp -= EnemycurrentJedlikmondata.baseatk;
+    console.log(DMGEffect1);
+    BuffDecay();
+    console.log(DMGEffect1);
+    if (DefActivation == true) {
+        if (EnemycurrentJedlikmondata.baseatk - (currentJedlikmondata.baseDef + currentJedlikmondata.DefStat) > 0) {
+            OurCurrentHp -= (EnemycurrentJedlikmondata.baseatk - (currentJedlikmondata.baseDef + currentJedlikmondata.DefStat));
+            DefActivation = false;
+        }
+        else{
+            console.log("működik");
+        }
+    }
+    else
+    {
+        if (EnemycurrentJedlikmondata.baseatk - currentJedlikmondata.baseDef > 0) {
+            OurCurrentHp -= (EnemycurrentJedlikmondata.baseatk - currentJedlikmondata.baseDef);
+        }
+    }
     HP = OurCurrentHp;
     if (currentJedlikmondata.name == OurJedlikmon1.name) {
         HP1 = HP;
@@ -389,19 +505,22 @@ function BotMove(HP) {
     else if(currentJedlikmondata.name == OurJedlikmon2.name){
         HP2 = HP;
     }
-        //else{
-    //  HP3 = OurCurrentHp;
-    //}
-    console.log(HP1);
-    console.log(HP2);
-    console.log(HP3);
+    else{
+      HP3 = OurCurrentHp;
+    }
     StatusWindowUpdate(HP);
     let change = Math.round((HP / currentJedlikmondata.health) * 100);
     if (OurCurrentHp <= 0) {
         OurCurrentHp = 0;
         HPleftstat.innerHTML = 0;
         HpBar1.style.width = 0 + "%";
-        MyJedlikmonDies(currentJedlikmondata);
+        if (LivingList.length > 1) {
+            MyJedlikmonDies(currentJedlikmondata);  
+        }
+        else{
+            alert("Vesztettél Bitch");
+        }
+        
     }
     else{
         HPleftstat.innerHTML = change;
@@ -412,4 +531,4 @@ function BotMove(HP) {
 StatusWindowUpdate();
 Listing();
 
-Audio.innerHTML = '<audio src="/music1.mp3" controls="controls" style="display: none;" autoplay></audio>';
+//Audio.innerHTML = '<audio src="/music1.mp3" controls="controls" style="display: none;" autoplay></audio>';
