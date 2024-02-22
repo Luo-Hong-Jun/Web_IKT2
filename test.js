@@ -33,6 +33,7 @@ let DMGEffect1 = 0;
 let DMGEffect2 = 0;
 let DMGEffect3 = 0;
 let DMGENEffect = 0;
+let EnemyDebuff = 0;
 const Ourpokemon1 = "Nitsubishi";
 const Ourpokemon2 = "Liptákkopter";
 const Ourpokemon3 = "Somesz";
@@ -154,12 +155,12 @@ box2.addEventListener("click", function() {
     // Def func
     if (optiondept == 0) {
         DefActivation = true;
-        BotMove(OurCurrentHp);
     }
     else {
-        console.log("mar skillt nyomtal meg");
+        EnemyDebuff += 3;
         ResetOptions();
     }
+    BotMove(OurCurrentHp);
 });
 
 box2.addEventListener('mouseover', function(){
@@ -266,6 +267,7 @@ function Jmon1Event() {
     ResetJedlikmonImage();
     ChangeHP(OurJedlikmon1);
     StatusWindowUpdate(HP1);
+    BotMove(OurCurrentHp);
 }
 
 function Jmon2Event() {
@@ -276,6 +278,7 @@ function Jmon2Event() {
     ResetJedlikmonImage();
     ChangeHP(OurJedlikmon2);
     StatusWindowUpdate(HP2);
+    BotMove(OurCurrentHp);
 }
 
 function Jmon3Event() {
@@ -286,6 +289,7 @@ function Jmon3Event() {
     ResetJedlikmonImage();
     ChangeHP(OurJedlikmon3);
     StatusWindowUpdate(HP3);
+    BotMove(OurCurrentHp);
 }
 
 Jmon1.addEventListener('click', Jmon1Event);
@@ -477,19 +481,34 @@ function BuffDecay() {
         DMGEffect3--;
     }
 }
+function EnemyDebuffDecay() {
+    if (EnemyDebuff > 0) {
+        EnemyDebuff--;
+    }
+}
 
 // Bot rész
 function BotMove(HP) {
-    console.log(DMGEffect1);
-    BuffDecay();
-    console.log(DMGEffect1);
-    if (DefActivation == true) {
-        if (EnemycurrentJedlikmondata.baseatk - (currentJedlikmondata.baseDef + currentJedlikmondata.DefStat) > 0) {
-            OurCurrentHp -= (EnemycurrentJedlikmondata.baseatk - (currentJedlikmondata.baseDef + currentJedlikmondata.DefStat));
+    if (DefActivation == true && EnemyDebuff > 0) {
+        if (EnemycurrentJedlikmondata.baseatk - Number(EnemycurrentJedlikmondata.baseatk * currentJedlikmondata.sk2) - currentJedlikmondata.baseDef - currentJedlikmondata.DefStat > 0) {
+            OurCurrentHp -= EnemycurrentJedlikmondata.baseatk - Number(EnemycurrentJedlikmondata.baseatk * currentJedlikmondata.sk2) - currentJedlikmondata.baseDef - currentJedlikmondata.DefStat;
+        }
+        else{
+            console.log("működik1");
+        }
+    }
+    else if (DefActivation == true) {
+        if (EnemycurrentJedlikmondata.baseatk - (Number(currentJedlikmondata.baseDef) + Number(currentJedlikmondata.DefStat)) > 0) {
+            OurCurrentHp -= (EnemycurrentJedlikmondata.baseatk - Number((currentJedlikmondata.baseDef) + Number(currentJedlikmondata.DefStat)));
             DefActivation = false;
         }
         else{
-            console.log("működik");
+            console.log("működik2");
+        }
+    }
+    else if(EnemyDebuff > 0){
+        if (EnemycurrentJedlikmondata.baseatk - Number(EnemycurrentJedlikmondata.baseatk * currentJedlikmondata.sk2) - currentJedlikmondata.baseDef > 0) {
+            OurCurrentHp -= EnemycurrentJedlikmondata.baseatk - Number(EnemycurrentJedlikmondata.baseatk * currentJedlikmondata.sk2) - currentJedlikmondata.baseDef;
         }
     }
     else
@@ -508,6 +527,8 @@ function BotMove(HP) {
     else{
       HP3 = OurCurrentHp;
     }
+    BuffDecay();
+    EnemyDebuffDecay();
     StatusWindowUpdate(HP);
     let change = Math.round((HP / currentJedlikmondata.health) * 100);
     if (OurCurrentHp <= 0) {
