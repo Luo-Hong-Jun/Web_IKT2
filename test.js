@@ -28,11 +28,15 @@ const Jmon3 = document.querySelector("#Jmon3");
 const JedlikmonImage1 = document.querySelector(".jedlikmon1");
 const JedlikmonImage2 = document.querySelector(".jedlikmon2");
 let DefActivation = false;
+let EnemyDefActivation = false;
 let optiondept = 0;
 let DMGEffect1 = 0;
 let DMGEffect2 = 0;
 let DMGEffect3 = 0;
-let DMGENEffect = 0;
+let Coldown1 = 0; 
+let Coldown2 = 0; 
+let Coldown3 = 0; 
+let EnemyColdown = 0;
 let EnemyDebuff = 0;
 const Ourpokemon1 = "Nitsubishi";
 const Ourpokemon2 = "Liptákkopter";
@@ -105,7 +109,19 @@ statusBar.addEventListener('click', function() {
 box1.addEventListener("click", function() {
     // Attack func
         if (optiondept == 0) {
-            if (Buffcheck(currentJedlikmondata.name) > 0) {
+            if (Buffcheck(currentJedlikmondata.name) > 0 && EnemyDefActivation == true) {
+                if (Number(currentJedlikmondata.baseatk)+Number(currentJedlikmondata.baseatk*currentJedlikmondata.sk1) - EnemycurrentJedlikmondata.baseDef - EnemycurrentJedlikmondata.DefStat > 0){
+                    EnemycurrentHp -= Number(currentJedlikmondata.baseatk)+Number(currentJedlikmondata.baseatk*currentJedlikmondata.sk1) - EnemycurrentJedlikmondata.baseDef - EnemycurrentJedlikmondata.DefStat;
+                }
+                EnemyDefActivation = false;
+            }
+            else if(EnemyDefActivation == true){
+                if (Number(currentJedlikmondata.baseatk) - EnemycurrentJedlikmondata.baseDef - EnemycurrentJedlikmondata.DefStat > 0) {
+                    EnemycurrentHp -= Number(currentJedlikmondata.baseatk) - EnemycurrentJedlikmondata.baseDef - EnemycurrentJedlikmondata.DefStat ;
+                }
+                EnemyDefActivation = false;
+            }
+            else if (Buffcheck(currentJedlikmondata.name) > 0) {
                 if (Number(currentJedlikmondata.baseatk)+Number(currentJedlikmondata.baseatk*currentJedlikmondata.sk1) - EnemycurrentJedlikmondata.baseDef > 0){
                     EnemycurrentHp -= Number(currentJedlikmondata.baseatk)+Number(currentJedlikmondata.baseatk*currentJedlikmondata.sk1) - EnemycurrentJedlikmondata.baseDef;
                 }
@@ -183,16 +199,42 @@ box3.addEventListener("click", function() {
         box3.innerHTML = `<p>${currentJedlikmondata.skill3}<p>`;
         box4.innerHTML = `<p>Vissza<p>`; 
         optiondept++;
+        if (Cooldown(currentJedlikmondata.name) > 0) {
+            box3.style.backgroundColor = "rgb(86, 85, 84)";
+        }
     }
     else {
-        if (Buffcheck(currentJedlikmondata.name) > 0) {
-            if (Number(currentJedlikmondata.baseatk * currentJedlikmondata.sk3)+Number((currentJedlikmondata.baseatk * currentJedlikmondata.sk3)*currentJedlikmondata.sk1) - EnemycurrentJedlikmondata.baseDef > 0){
-                EnemycurrentHp -= Number(currentJedlikmondata.baseatk * currentJedlikmondata.sk3)+Number((currentJedlikmondata.baseatk * currentJedlikmondata.sk3)*currentJedlikmondata.sk1) - EnemycurrentJedlikmondata.baseDef;
+        if (Cooldown(currentJedlikmondata.name) == 0) {
+            ResetOptions();
+            if (currentJedlikmondata.name == OurJedlikmon1.name) {
+                Coldown1 = currentJedlikmondata.limit;
             }
-        }
-        else if (currentJedlikmondata.baseatk * currentJedlikmondata.sk3 - EnemycurrentJedlikmondata.baseDef > 0) {
-            EnemycurrentHp -= (currentJedlikmondata.baseatk * currentJedlikmondata.sk3) - EnemycurrentJedlikmondata.baseDef;
-        }
+            else if(currentJedlikmondata.name == OurJedlikmon2.name){
+                Coldown2 = currentJedlikmondata.limit;
+            }
+            else{
+                Coldown3 = currentJedlikmondata.limit;
+            }
+            if (Buffcheck(currentJedlikmondata.name) > 0 && EnemyDefActivation == true) {
+                if (Number(currentJedlikmondata.baseatk * currentJedlikmondata.sk3)+Number((currentJedlikmondata.baseatk * currentJedlikmondata.sk3)*currentJedlikmondata.sk1) - EnemycurrentJedlikmondata.baseDef - EnemycurrentJedlikmondata.DefStat> 0){
+                    EnemycurrentHp -= Number(currentJedlikmondata.baseatk * currentJedlikmondata.sk3)+Number((currentJedlikmondata.baseatk * currentJedlikmondata.sk3)*currentJedlikmondata.sk1) - EnemycurrentJedlikmondata.baseDef- EnemycurrentJedlikmondata.DefStat;
+                }
+                EnemyDefActivation = false;
+            }
+            else if(EnemyDefActivation == true){
+                if (currentJedlikmondata.baseatk * currentJedlikmondata.sk3 - EnemycurrentJedlikmondata.baseDef - EnemycurrentJedlikmondata.DefStat> 0) {
+                    EnemycurrentHp -= currentJedlikmondata.baseatk * currentJedlikmondata.sk3 - EnemycurrentJedlikmondata.baseDef - EnemycurrentJedlikmondata.DefStat
+                }
+                EnemyDefActivation = false;
+            }
+            else if (Buffcheck(currentJedlikmondata.name) > 0) {
+                if (Number(currentJedlikmondata.baseatk * currentJedlikmondata.sk3)+Number((currentJedlikmondata.baseatk * currentJedlikmondata.sk3)*currentJedlikmondata.sk1) - EnemycurrentJedlikmondata.baseDef > 0){
+                    EnemycurrentHp -= Number(currentJedlikmondata.baseatk * currentJedlikmondata.sk3)+Number((currentJedlikmondata.baseatk * currentJedlikmondata.sk3)*currentJedlikmondata.sk1) - EnemycurrentJedlikmondata.baseDef;
+                }
+            }
+            else if (currentJedlikmondata.baseatk * currentJedlikmondata.sk3 - EnemycurrentJedlikmondata.baseDef > 0) {
+                EnemycurrentHp -= (currentJedlikmondata.baseatk * currentJedlikmondata.sk3) - EnemycurrentJedlikmondata.baseDef;
+            }
         let change = Math.round((EnemycurrentHp / EnemycurrentJedlikmondata.health) * 100);
         if (EnemycurrentHp <= 0) {
             EnemycurrentHp = 0;
@@ -210,7 +252,10 @@ box3.addEventListener("click", function() {
             HpBar2.style.width = change + "%";
             BotMove(OurCurrentHp);
         }
-        ResetOptions();
+        }
+        else{
+            alert("The coldown is not yet finished");
+        }
     }
 });
 
@@ -322,9 +367,9 @@ function StatusWindowUpdate(HP) {
     document.querySelector("#StatusName").innerHTML = currentJedlikmondata.name;
     document.querySelector("#StatusDef").innerHTML = currentJedlikmondata.baseDef;
     //  TUrn system köll itt javíani
-    document.querySelector("#StatusDmgboost").innerHTML = currentJedlikmondata.sk1Status;
+    document.querySelector("#StatusDmgboost").innerHTML = Buffcheck(currentJedlikmondata.name);
     //
-    document.querySelector("#StatusDmgboostPer").innerHTML = currentJedlikmondata.sk1;
+    document.querySelector("#StatusDmgboostPer").innerHTML = currentJedlikmondata.sk1 * 100;
 }
 
 function ResetJedlikmonImage() {
@@ -481,41 +526,112 @@ function BuffDecay() {
         DMGEffect3--;
     }
 }
+
 function EnemyDebuffDecay() {
     if (EnemyDebuff > 0) {
         EnemyDebuff--;
     }
 }
 
+function Cooldown(name) {
+    if (name == OurJedlikmon1.name) {
+        return Coldown1;
+    }
+    else if(name == OurJedlikmon2.name){
+        return Coldown2;
+    }
+    else{
+        return Coldown3;
+    }
+}
+
+function Cooldownstat(name) {
+    if (name == OurJedlikmon1.name) {
+        Coldown1--;
+    }
+    else if(name == OurJedlikmon2.name){
+        Coldown2--;
+    }
+    else{
+        Coldown3--;
+    }
+}
+
 // Bot rész
 function BotMove(HP) {
-    if (DefActivation == true && EnemyDebuff > 0) {
-        if (EnemycurrentJedlikmondata.baseatk - Number(EnemycurrentJedlikmondata.baseatk * currentJedlikmondata.sk2) - currentJedlikmondata.baseDef - currentJedlikmondata.DefStat > 0) {
-            OurCurrentHp -= EnemycurrentJedlikmondata.baseatk - Number(EnemycurrentJedlikmondata.baseatk * currentJedlikmondata.sk2) - currentJedlikmondata.baseDef - currentJedlikmondata.DefStat;
+    Cooldownstat(currentJedlikmondata.name);
+    let rngNum = Math.floor(Math.random() * 3) + 1;
+    if(rngNum == 3){
+        if(EnemyColdown == 0){
+            console.log("Skill történt");
+            EnemyColdown = EnemycurrentJedlikmondata.limit;
+            if (DefActivation == true && EnemyDebuff > 0) {
+                if ((Number(EnemycurrentJedlikmondata.baseatk) + Number(EnemycurrentJedlikmondata.baseatk * EnemycurrentJedlikmondata.sk3)) - Number(EnemycurrentJedlikmondata.baseatk * currentJedlikmondata.sk2) - currentJedlikmondata.baseDef - currentJedlikmondata.DefStat > 0) {
+                    OurCurrentHp -= (Number(EnemycurrentJedlikmondata.baseatk) + Number(EnemycurrentJedlikmondata.baseatk * EnemycurrentJedlikmondata.sk3)) - Number(EnemycurrentJedlikmondata.baseatk * currentJedlikmondata.sk2) - currentJedlikmondata.baseDef - currentJedlikmondata.DefStat;
+                }
+                else{
+                }
+                DefActivation = false;
+            }
+            else if (DefActivation == true) {
+                if ((Number(EnemycurrentJedlikmondata.baseatk) + Number(EnemycurrentJedlikmondata.baseatk * EnemycurrentJedlikmondata.sk3)) - (Number(currentJedlikmondata.baseDef) + Number(currentJedlikmondata.DefStat)) > 0) {
+                    OurCurrentHp -= (Number(EnemycurrentJedlikmondata.baseatk) + Number(EnemycurrentJedlikmondata.baseatk * EnemycurrentJedlikmondata.sk3)) - Number((currentJedlikmondata.baseDef) + Number(currentJedlikmondata.DefStat));
+                }
+                else{
+                }
+                DefActivation = false;
+            }
+            else if(EnemyDebuff > 0){
+                if ((Number(EnemycurrentJedlikmondata.baseatk) + Number(EnemycurrentJedlikmondata.baseatk * EnemycurrentJedlikmondata.sk3)) - Number(EnemycurrentJedlikmondata.baseatk * currentJedlikmondata.sk2) - currentJedlikmondata.baseDef > 0) {
+                    OurCurrentHp -= (Number(EnemycurrentJedlikmondata.baseatk) + Number(EnemycurrentJedlikmondata.baseatk * EnemycurrentJedlikmondata.sk3)) - Number(EnemycurrentJedlikmondata.baseatk * currentJedlikmondata.sk2) - currentJedlikmondata.baseDef;
+                }
+            }
+            else
+            {
+                if ((Number(EnemycurrentJedlikmondata.baseatk) + Number(EnemycurrentJedlikmondata.baseatk * EnemycurrentJedlikmondata.sk3)) - currentJedlikmondata.baseDef > 0) {
+                    OurCurrentHp -= (Number(EnemycurrentJedlikmondata.baseatk) + Number(EnemycurrentJedlikmondata.baseatk * EnemycurrentJedlikmondata.sk3)) - currentJedlikmondata.baseDef;
+                }
+            }
+
         }
         else{
-            console.log("működik1");
+            rngNum = 1;
+            EnemyColdown--;
         }
     }
-    else if (DefActivation == true) {
-        if (EnemycurrentJedlikmondata.baseatk - (Number(currentJedlikmondata.baseDef) + Number(currentJedlikmondata.DefStat)) > 0) {
-            OurCurrentHp -= (EnemycurrentJedlikmondata.baseatk - Number((currentJedlikmondata.baseDef) + Number(currentJedlikmondata.DefStat)));
+    else if (rngNum == 1) {
+        if (DefActivation == true && EnemyDebuff > 0) {
+            if (EnemycurrentJedlikmondata.baseatk - Number(EnemycurrentJedlikmondata.baseatk * currentJedlikmondata.sk2) - currentJedlikmondata.baseDef - currentJedlikmondata.DefStat > 0) {
+                OurCurrentHp -= EnemycurrentJedlikmondata.baseatk - Number(EnemycurrentJedlikmondata.baseatk * currentJedlikmondata.sk2) - currentJedlikmondata.baseDef - currentJedlikmondata.DefStat;
+            }
+            else{
+                console.log("működik1");
+            }
             DefActivation = false;
         }
-        else{
-            console.log("működik2");
+        else if (DefActivation == true) {
+            if (EnemycurrentJedlikmondata.baseatk - (Number(currentJedlikmondata.baseDef) + Number(currentJedlikmondata.DefStat)) > 0) {
+                OurCurrentHp -= (EnemycurrentJedlikmondata.baseatk - Number((currentJedlikmondata.baseDef) + Number(currentJedlikmondata.DefStat)));
+            }
+            else{
+                console.log("működik2");
+            }
+            DefActivation = false;
+        }
+        else if(EnemyDebuff > 0){
+            if (EnemycurrentJedlikmondata.baseatk - Number(EnemycurrentJedlikmondata.baseatk * currentJedlikmondata.sk2) - currentJedlikmondata.baseDef > 0) {
+                OurCurrentHp -= EnemycurrentJedlikmondata.baseatk - Number(EnemycurrentJedlikmondata.baseatk * currentJedlikmondata.sk2) - currentJedlikmondata.baseDef;
+            }
+        }
+        else
+        {
+            if (EnemycurrentJedlikmondata.baseatk - currentJedlikmondata.baseDef > 0) {
+                OurCurrentHp -= (EnemycurrentJedlikmondata.baseatk - currentJedlikmondata.baseDef);
+            }
         }
     }
-    else if(EnemyDebuff > 0){
-        if (EnemycurrentJedlikmondata.baseatk - Number(EnemycurrentJedlikmondata.baseatk * currentJedlikmondata.sk2) - currentJedlikmondata.baseDef > 0) {
-            OurCurrentHp -= EnemycurrentJedlikmondata.baseatk - Number(EnemycurrentJedlikmondata.baseatk * currentJedlikmondata.sk2) - currentJedlikmondata.baseDef;
-        }
-    }
-    else
-    {
-        if (EnemycurrentJedlikmondata.baseatk - currentJedlikmondata.baseDef > 0) {
-            OurCurrentHp -= (EnemycurrentJedlikmondata.baseatk - currentJedlikmondata.baseDef);
-        }
+    else if(rngNum == 2){
+        EnemyDefActivation = true;
     }
     HP = OurCurrentHp;
     if (currentJedlikmondata.name == OurJedlikmon1.name) {

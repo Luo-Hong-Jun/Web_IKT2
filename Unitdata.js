@@ -18,7 +18,7 @@ const Jedlikmons =
         'skill3': "Chuck Norris Vicc",
         'skill3Desc': "Deals 2.5 times more than base damage",
         'sk3': '2.5',
-        'limit': "1",
+        'limit': "4",
         'picture': '/pictures/laci1.png',
         'SmolPicture': '/pictures/laci.png',
     },
@@ -84,7 +84,7 @@ const Jedlikmons =
         'skill3': "AK47",
         'skill3Desc': "Deals 1.5 times more than base damage",
         'sk3': '1.5',
-        'limit': '10',
+        'limit': '2',
         'picture': '/pictures/AK-47.png',
         'SmolPicture': '/pictures/AK-47.png',
     }
