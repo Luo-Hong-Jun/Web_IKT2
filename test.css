@@ -235,6 +235,67 @@
     margin-left: 20%;
 }
 
+@keyframes fadeaway{
+    from{opacity: 1;}
+    to {opacity: 0;}
+}
+
+#shield1{
+    opacity: 0;
+    position: absolute;
+    height: 50%;
+    width: 25%;
+    background-image: url(/pictures/shield.png);
+    margin-left: 5%;
+    margin-bottom: 20%;
+    animation-duration: 1.5s;
+    animation-name: fadeaway;
+    animation-fill-mode: forwards;
+    background-size: contain;
+}
+
+#shield2{
+    right: 0;
+    margin-right: 15%;
+    opacity: 0;
+    position: absolute;
+    height: 50%;
+    width: 25%;
+    background-image: url(/pictures/shield.png);
+    background-size: contain;
+    animation-name: fadeaway;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+}
+
+#cut1{
+    opacity: 0;
+    position: absolute;
+    height: 50%;
+    width: 25%;
+    background-image: url(/pictures/cut.png);
+    margin-left: 5%;
+    margin-bottom: 20%;
+    animation-duration: 1.5s;
+    animation-name: fadeaway;
+    animation-fill-mode: forwards;
+    background-size: contain;
+}
+
+#cut2{
+    right: 0;
+    margin-right: 15%;
+    opacity: 0;
+    position: absolute;
+    height: 50%;
+    width: 25%;
+    background-image: url(/pictures/cut.png);
+    background-size: contain;
+    animation-name: fadeaway;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+}
+
 .jedlikmon2{
     float: right;
     height: 100%;
