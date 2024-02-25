@@ -1,3 +1,65 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+
 body{
-    background-image: ;
+    background-image: url(pictures/Jedlik_Ányos_Gépipari_és_Informatikai_Középiskola,_a_Szent_István_út_felől_nézve,_2017_Győr.jpg);
+}
+
+#opt_select{
+    height: 65vh;
+    background-color: rgb(0, 17, 255);
+    opacity: 90%;
+    margin: 10px;
+    border-radius: 30px;
+}
+
+#opt1, #opt2, #opt3{
+    height: 55vh;
+    width: 28%;
+    float: left;
+    margin: 40px;
+    border: solid 10px;
+    border-radius: 50px;
+    opacity: 100%;
+}
+
+#start{
+    height: 32vh;
+    background-color: crimson;
+    opacity: 90%;
+    margin: 10px;
+    border-radius: 30px;
+}
+
+#button{
+    height: 20vh;
+    width: 94%;
+    float: left;
+    margin: 40px;
+    border: solid 10px;
+    border-radius: 50px; 
+}
+
+h1, h2, p{
+    text-align: center;
+    opacity: 100%;
+}
+
+#img1{
+    width: 35vh;
+}
+
+#img2{
+    width: 50vh;
+}
+
+#img3{
+    width: 50vh;
+}
+
+#kep{
+    display: flex;
+    justify-content: center;
 }
