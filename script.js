@@ -48,6 +48,7 @@ let LivingList = [`Nitsubishi`,`Liptákkopter`,`Somesz`];
 let OurJedlikmon1;
 let OurJedlikmon2;
 let OurJedlikmon3;
+let Win = false;
     JedlikmonList.forEach(x => {
         if (x.name == Ourpokemon1) {
             OurJedlikmon1 = x;
@@ -139,6 +140,7 @@ box1.addEventListener("click", function() {
                 }
                 else{
                     alert("NYertél yey");
+                    Win = true;
                 }
             }
             else{
@@ -251,6 +253,7 @@ box3.addEventListener("click", function() {
             }
             else{
                 alert("NYertél yey");
+                Win = true;
             }
         }
         else{
@@ -425,7 +428,7 @@ function EnemyDies() {
         EnemyNameTypeReset();
     }
     else{
-        console.log("you won bitch");
+        console.log("you won");
     }
 }
 
@@ -643,7 +646,7 @@ function BotMove(HP) {
         }
     }
     else if (rngNum == 1 || rngNum == 4) {
-        console.log("hit")
+        console.log("hit");
         if (DefActivation == true && EnemyDebuff > 0) {
             ApplyanimationShield1();
             if (EnemycurrentJedlikmondata.baseatk - Number(EnemycurrentJedlikmondata.baseatk * currentJedlikmondata.sk2) - currentJedlikmondata.baseDef - currentJedlikmondata.DefStat > 0) {
@@ -703,8 +706,8 @@ function BotMove(HP) {
             MyJedlikmonDies(currentJedlikmondata);  
             ApplyanimationOOf();
         }
-        else{
-            alert("Vesztettél Bitch");
+        else if(Win == false){
+            alert("Vesztettél");
         }
         
     }
